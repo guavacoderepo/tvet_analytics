@@ -1,9 +1,9 @@
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timedelta
 import random
 
 # connect to mongo db
-mongo = MongoClient("mongodb://localhost:27017", tls=True, tlsAllowInvalidCertificates=True).tvet 
+mongo = MongoClient("mongodb://localhost:27017").tvetApp 
 
 
 
@@ -1015,7 +1015,7 @@ def rand(list=[]):
     item = list[random.randint(0,len(list)-1)]
     return item
 
-
+# function to get state
 def rand_map(map={"k":"v"}):
     list = []
     for k,v in map.items():
@@ -1033,60 +1033,64 @@ def rand_map(map={"k":"v"}):
 
 
 def create_dummy():
+
+    i = rand_map(states)
+
+    days = timedelta(weeks= random.randint(600, 1200))
+
     data = {
-    
-    "user_id": {
-        "_id": "0xff2345",
-        "user_type": "graduate",
-        "name": rand(list=name),
-        "is_email_verified": True,
-        "email": "{}{}".format(rand(list=name)[0], "@gmail.com"),
-        "username": rand(list=name)[1],
-        "address": "address {}".format(rand(list=name)),
-        "phone": "+234908474644",
-        "avatar": {
-            "_id": "0xff344455",
-            "url": "photo.png.url",
-            "mimetype": "jpg/png",
+        "user_id": {
+            "_id": "0xff2345",
+            "user_type": "graduate",
+            "name": rand(list=name),
+            "is_email_verified": True,
+            "email": "{}{}".format(rand(list=name).split(" ")[1], "@gmail.com"),
+            "username": rand(list=name).split(" ")[1],
+            "address": "address {}".format(rand(list=name)),
+            "phone": "+234908474644",
+            "avatar": {
+                "_id": "0xff344455",
+                "url": "photo.png.url",
+                "mimetype": "jpg/png",
+            },
+            "is_active": True,
+            "createdAt": datetime.now(),
+            "updatedAt": datetime.now(),
         },
-        "is_active": True,
+        "gender": rand(list=gender),
+        "state": i[0],
+        "lga": rand(list = i[1]),
+        "nationality": "Nigeria",
+        "nin": "234242344",
+        "registered_by": rand(list=registered),
+        "current_occupation": "null for now",
+        "is_employed": rand(list=boool),
+        "resume_id": {
+            "_id": "0xff33i4",
+            "url": "photo.png.url",
+            "mimetype": "jpeg/png",
+        },
+        "skills_acquired": ["skill", "skill", "skill"],
+        "date_of_birth": datetime.now()-days,
+        "school_id": {
+            "_id": "0xff33i4",
+            "url": "photo.png.url",
+            "mimetype": "jpeg/png",
+        } ,
+        "matric_number": "4555423424",
+        "o_level_certifications": {
+            "certification_type": rand(list=certificate),
+            "number_of_sittings": 343434334345,
+        },
         "createdAt": datetime.now(),
         "updatedAt": datetime.now(),
-    },
-    "gender": rand(list=gender),
-
-    "state":rand_map(states)[0],
-    "lga": rand[rand_map(states)[1]],
-
-    "nationality": "Nigeria",
-    "nin": "234242344",
-    "registered_by": rand(list=registered),
-    "current_occupation": "null for now",
-    "is_employed": rand(list=boool),
-    "resume_id": {
-        "_id": "0xff33i4",
-        "url": "photo.png.url",
-        "mimetype": "jpeg/png",
-    },
-    "skills_acquired": ["skill", "skill", "skill"],
-
-    "date_of_birth": datetime.now(),
-
-    "school_id": {
-        "_id": "0xff33i4",
-        "url": "photo.png.url",
-        "mimetype": "jpeg/png",
-    } ,
-    "matric_number": "4555423424",
-    "o_level_certifications": {
-        "certification_type": "waec" | "neco" | "nabteb",
-        "number_of_sittings": 343434334345,
-    },
-    "createdAt": datetime.now(),
-    "updatedAt": datetime.now(),
     }
 
-    print(data)
+    try:
+        mongo.graduates.insert_one(data)
+    except Exception as e:
+        print(e)
+
 
 
 
