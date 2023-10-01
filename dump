@@ -1,0 +1,51 @@
+type GRADUATES = {
+  _id: string
+  user_id: {
+    _id: string
+    user_type: "admin" | "graduate" | "institution" | "staff" | "mentor" | "employer" | "other";
+    name: string
+    is_email_verified: boolean
+    email: string
+    username: string
+    address: string | null
+    phone: string | null
+    avatar: {
+      _id: string
+      url: string
+      mimetype: string
+    } | null
+    is_active: boolean
+    createdAt: string
+    updatedAt: string
+  }
+  gender: "male" | "female" | "other";
+  state: string
+  lga: string
+  nationality: string
+  nin: string | null
+  registered_by: string | null
+  current_occupation: string | null
+  is_employed: boolean | null
+  resume_id: {
+    _id: string
+    url: string
+    mimetype: string
+  } | null
+  skills_acquired: string[]
+  date_of_birth: string | null
+  school_id: {
+    _id: string
+    url: string
+    mimetype: string
+  } | null
+  matric_number: string | null
+  o_level_certifications: {
+    certification_type: "waec" | "neco" | "nabteb";
+    number_of_sittings: number
+  } | null
+  createdAt: string
+  updatedAt: string
+}
+
+
+
