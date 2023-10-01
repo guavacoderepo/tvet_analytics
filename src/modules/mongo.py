@@ -1,5 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
+import random
+
 # connect to mongo db
 mongo = MongoClient("mongodb://localhost:27017", tls=True, tlsAllowInvalidCertificates=True).tvet 
 
@@ -8,7 +10,7 @@ mongo = MongoClient("mongodb://localhost:27017", tls=True, tlsAllowInvalidCertif
 # function to create dummy 
 
 name = ["Smith English", "Williams Smith", "John Wick", "Peter Paul", "Sam Jummy", "DInner Skiper", "Muna zammani"]
-isActive = [True, False]
+boool = [True, False]
 gender = ["male" , "female" , "other"]
 states = {
     "abuja": [
@@ -1008,10 +1010,26 @@ states = {
 registered = ["institution" , "staff" , "mentor" , "employer" ]
 certificate = ["waec" , "neco" , "nabteb"]
 
+# function to generate random value
+def rand(list=[]):
+    item = list[random.randint(0,len(list)-1)]
+    return item
 
-def rand(list):
+
+def rand_map(map={"k":"v"}):
+    list = []
+    for k,v in map.items():
+        list.append(k)
+
+    state = rand(list=list)
+
+    lga = map[state]
+
+    return state, lga
     
-    
+
+
+
 
 
 def create_dummy():
@@ -1020,12 +1038,11 @@ def create_dummy():
     "user_id": {
         "_id": "0xff2345",
         "user_type": "graduate",
-        "name": string,
+        "name": rand(list=name),
         "is_email_verified": True,
-        "email": string,
-        "username": string,
-        "address": "address {}".format(),
-
+        "email": "{}{}".format(rand(list=name)[0], "@gmail.com"),
+        "username": rand(list=name)[1],
+        "address": "address {}".format(rand(list=name)),
         "phone": "+234908474644",
         "avatar": {
             "_id": "0xff344455",
@@ -1036,14 +1053,16 @@ def create_dummy():
         "createdAt": datetime.now(),
         "updatedAt": datetime.now(),
     },
-    "gender":  c,
-    "state": string,
-    "lga": string,
+    "gender": rand(list=gender),
+
+    "state":rand_map(states)[0],
+    "lga": rand[rand_map(states)[1]],
+
     "nationality": "Nigeria",
     "nin": "234242344",
-    "registered_by": string | null,
+    "registered_by": rand(list=registered),
     "current_occupation": "null for now",
-    "is_employed": boolean | null,
+    "is_employed": rand(list=boool),
     "resume_id": {
         "_id": "0xff33i4",
         "url": "photo.png.url",
@@ -1066,3 +1085,10 @@ def create_dummy():
     "createdAt": datetime.now(),
     "updatedAt": datetime.now(),
     }
+
+    print(data)
+
+
+
+
+create_dummy()
