@@ -1094,5 +1094,10 @@ def create_dummy():
 
 
 
-
-create_dummy()
+def fetch_all():
+    try:
+        return mongo.graduates.find()
+    except Exception as e:
+        print(e)
+        return 
+    
